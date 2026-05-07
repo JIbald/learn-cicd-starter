@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -93,6 +94,11 @@ func main() {
 		Handler: router,
 	}
 
-	log.Printf("Serving on port: %s\n", port)
+	portInt, err := strconv.Atoi(port)
+	if err != nil {
+		log.Fatalf("Invalid port number provided: %v", err)
+	}
+
+	log.Printf("Serving on port: %d\n", portInt)
 	log.Fatal(srv.ListenAndServe())
 }
